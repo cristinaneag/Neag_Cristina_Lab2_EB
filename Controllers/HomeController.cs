@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Neag_Cristina_Lab2_EB.Data;
+using Neag_Cristina_Lab2_EB.Models.LibraryViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Neag_Cristina_Lab2_EB.Models;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace Neag_Cristina_Lab2_EB.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly LibraryContext _context;
+        public HomeController(LibraryContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -26,6 +28,19 @@ namespace Neag_Cristina_Lab2_EB.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public async Task<ActionResult> Statistics()
+        {
+            IQueryable<OrderGroup> data =
+                from order in _context.Orders
+                group order by order.OrderDate into dateGroup
+                select new OrderGroup()
+                {
+                    OrderDate = dateGroup.Key,
+                    BookCount = dateGroup.Count()
+                };
+            return View(await data.AsNoTracking().ToListAsync());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
