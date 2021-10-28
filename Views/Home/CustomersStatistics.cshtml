@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Neag_Cristina_Lab2_EB.Models.LibraryViewModels.CustomerOrderGroup>
+@{
+    ViewData["Title"] = "CustomerStatistics";
+}
+
+<h1>CustomerStatistics</h1>
+
+<table>
+    <tr>
+        <th>
+            Customer Name
+        </th>
+        <th>
+            Orders
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @item.OrderCount
+            </td>
+        </tr>
+    }
+</table>

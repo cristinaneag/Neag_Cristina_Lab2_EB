@@ -43,6 +43,19 @@ namespace Neag_Cristina_Lab2_EB.Controllers
             return View(await data.AsNoTracking().ToListAsync());
         }
 
+        public async Task<ActionResult> CustomersStatistics()
+        {
+            IQueryable<CustomerOrderGroup> data =
+                from order in _context.Orders
+                group order by order.Customer.Name into groupName
+                select new CustomerOrderGroup()
+                {
+                    CustomerName = groupName.Key,
+                    OrderCount = groupName.Count()
+                };
+            return View(await data.AsNoTracking().ToListAsync());
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
