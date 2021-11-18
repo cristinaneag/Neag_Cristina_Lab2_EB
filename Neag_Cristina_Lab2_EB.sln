@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neag_Cristina_Lab2_EB", "Neag_Cristina_Lab2_EB.csproj", "{65A7C71A-D97C-4F0F-90BD-8845C3A56DEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neag_Cristina_Lab2_EB", "Neag_Cristina_Lab2_EB.csproj", "{65A7C71A-D97C-4F0F-90BD-8845C3A56DEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryModel", "..\LibraryModel\LibraryModel.csproj", "{DC7937D2-5462-40A3-9593-FE957518A39F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryWebAPI", "..\LibraryWebAPI\LibraryWebAPI.csproj", "{3589CB50-E155-459F-8B09-2CDE7A32A34C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{65A7C71A-D97C-4F0F-90BD-8845C3A56DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65A7C71A-D97C-4F0F-90BD-8845C3A56DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65A7C71A-D97C-4F0F-90BD-8845C3A56DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC7937D2-5462-40A3-9593-FE957518A39F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC7937D2-5462-40A3-9593-FE957518A39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC7937D2-5462-40A3-9593-FE957518A39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC7937D2-5462-40A3-9593-FE957518A39F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3589CB50-E155-459F-8B09-2CDE7A32A34C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3589CB50-E155-459F-8B09-2CDE7A32A34C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3589CB50-E155-459F-8B09-2CDE7A32A34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3589CB50-E155-459F-8B09-2CDE7A32A34C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
