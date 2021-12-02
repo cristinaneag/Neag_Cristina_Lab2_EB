@@ -7,9 +7,11 @@ using Neag_Cristina_Lab2_EB.Models.LibraryViewModels;
 using Microsoft.EntityFrameworkCore;
 using Neag_Cristina_Lab2_EB.Data;
 using Neag_Cristina_Lab2_EB.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Neag_Cristina_Lab2_EB.Controllers
 {
+    [Authorize(Policy = "OnlySales")]
     public class PublishersController : Controller
     {
         private readonly LibraryContext _context;
