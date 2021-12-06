@@ -27,12 +27,29 @@ namespace Neag_Cristina_Lab2_EB
             services.AddDbContext<LibraryContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSignalR();
+            services.AddRazorPages();
+
 
             services.Configure<IdentityOptions>(options => {
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Lockout.AllowedForNewUsers = true;
                 options.Password.RequiredLength = 8;
+            });
+
+            services.AddAuthorization(opts => {
+                opts.AddPolicy("SalesManager", policy => {
+                    policy.RequireRole("Manager");
+                    policy.RequireClaim("Department", "Sales");
+                });
+                opts.AddPolicy("OnlySales", policy => {
+                    policy.RequireClaim("Department", "Sales");
+                });
+            });
+            services.ConfigureApplicationCookie(opts =>
+            {
+                opts.AccessDeniedPath = "/Identity/Account/AccessDenied";
+
             });
         }
 

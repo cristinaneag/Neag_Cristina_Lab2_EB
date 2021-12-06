@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Neag_Cristina_Lab2_EB.Models;
 
 namespace Neag_Cristina_Lab2_EB.Controllers
 {
+    [Authorize(Policy = "SalesManager")]
     public class CustomersController : Controller
     {
         private readonly LibraryContext _context;
