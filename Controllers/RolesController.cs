@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Neag_Cristina_Lab2_EB.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Neag_Cristina_Lab2_EB.Controllers
@@ -53,16 +52,15 @@ namespace Neag_Cristina_Lab2_EB.Controllers
                 ModelState.AddModelError("", "No role found");
             return View("Index", roleManager.Roles);
         }
-
+        
         public async Task<IActionResult> Update(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);
-            List<AppUser> members = new List<AppUser>();
-            List<AppUser> nonMembers = new List<AppUser>();
-            foreach (AppUser user in userManager.Users)
+            List<IdentityUser> members = new List<IdentityUser>();
+            List<IdentityUser> nonMembers = new List<IdentityUser>();
+            foreach (IdentityUser user in userManager.Users)
             {
-                var list = await userManager.IsInRoleAsync(user, role.Name)
-               ? members : nonMembers;
+                var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
                 list.Add(user);
             }
             return View(new RoleEdit
@@ -80,7 +78,7 @@ namespace Neag_Cristina_Lab2_EB.Controllers
             {
                 foreach (string userId in model.AddIds ?? new string[] { })
                 {
-                    AppUser user = await userManager.FindByIdAsync(userId);
+                    IdentityUser user = await userManager.FindByIdAsync(userId);
                     if (user != null)
                     {
                         result = await userManager.AddToRoleAsync(user,
@@ -92,7 +90,7 @@ namespace Neag_Cristina_Lab2_EB.Controllers
                 foreach (string userId in model.DeleteIds ?? new string[] {
 })
                 {
-                    AppUser user = await userManager.FindByIdAsync(userId);
+                    IdentityUser user = await userManager.FindByIdAsync(userId);
                     if (user != null)
                     {
                         result = await
@@ -107,11 +105,11 @@ namespace Neag_Cristina_Lab2_EB.Controllers
             else
                 return await Update(model.RoleId);
         }
+        
         private void Errors(IdentityResult result)
         {
             foreach (IdentityError error in result.Errors)
                 ModelState.AddModelError("", error.Description);
         }
     }
-}
 }
