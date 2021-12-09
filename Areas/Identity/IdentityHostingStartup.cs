@@ -17,7 +17,8 @@ namespace Neag_Cristina_Lab2_EB.Areas.Identity
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<IdentityContext>(options =>
                     options.UseSqlServer(
-                        context.Configuration.GetConnectionString("IdentityContextConnection")));
+                        context.Configuration.GetConnectionString("IdentityContextConnection")
+                   ));
 
                 services.AddIdentity<IdentityUser, IdentityRole>(options =>
                     options.SignIn.RequireConfirmedAccount = true)
