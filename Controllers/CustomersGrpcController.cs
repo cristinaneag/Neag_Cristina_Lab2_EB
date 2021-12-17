@@ -39,9 +39,9 @@ namespace Neag_Cristina_Lab2_EB.Controllers
             return View(customer);
         }
 
-        
         public IActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -49,6 +49,7 @@ namespace Neag_Cristina_Lab2_EB.Controllers
 
             var client = new
                CustomerService.CustomerServiceClient(channel);
+
             CustomerId idC = new CustomerId
             {
                 Id = (int)id
@@ -60,11 +61,100 @@ namespace Neag_Cristina_Lab2_EB.Controllers
                 return NotFound();
             }
 
+            return View(new Neag_Cristina_Lab2_EB.Models.Customer()
+            {
+                CustomerID = customer.CustomerId,
+                Name = customer.Name,
+                Adress = customer.Adress,
+                BirthDate = DateTime.Parse(customer.Birthdate)
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int? id, Customer customer)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var client = new
+               CustomerService.CustomerServiceClient(channel);
+
+            CustomerId idC = new CustomerId
+            {
+                Id = (int)id
+            };
+            Customer customer1 = client.Get(idC);
+
+            if (customer1 == null)
+            {
+                return NotFound();
+            }
+
             client.Update(customer);
 
-            Console.WriteLine("done");
-            
-            return View(customer);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public  IActionResult Delete(int? id, bool? saveChangesError = false)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var client = new
+               CustomerService.CustomerServiceClient(channel);
+
+            CustomerId idC = new CustomerId
+            {
+                Id = (int)id
+            };
+            Customer customer = client.Get(idC);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return View(new Neag_Cristina_Lab2_EB.Models.Customer()
+            {
+                CustomerID = customer.CustomerId,
+                Name = customer.Name,
+                Adress = customer.Adress,
+                BirthDate = DateTime.Parse(customer.Birthdate)
+            });
+        }
+
+        // POST: Books/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var client = new
+               CustomerService.CustomerServiceClient(channel);
+
+            CustomerId idC = new CustomerId
+            {
+                Id = (int)id
+            };
+            Customer customer1 = client.Get(idC);
+
+            if (customer1 == null)
+            {
+                return NotFound();
+            }
+
+            client.Delete(idC);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
