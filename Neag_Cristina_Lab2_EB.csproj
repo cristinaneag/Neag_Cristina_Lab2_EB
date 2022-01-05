@@ -6,13 +6,9 @@
 
   <ItemGroup>
     <Compile Remove="GrpcCustomersService\**" />
-    <Compile Remove="LibraryModel\**" />
     <Content Remove="GrpcCustomersService\**" />
-    <Content Remove="LibraryModel\**" />
     <EmbeddedResource Remove="GrpcCustomersService\**" />
-    <EmbeddedResource Remove="LibraryModel\**" />
     <None Remove="GrpcCustomersService\**" />
-    <None Remove="LibraryModel\**" />
   </ItemGroup>
 
   <ItemGroup>
