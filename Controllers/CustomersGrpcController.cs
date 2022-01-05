@@ -41,119 +41,57 @@ namespace Neag_Cristina_Lab2_EB.Controllers
 
         public IActionResult Edit(int? id)
         {
-
             if (id == null)
             {
                 return NotFound();
             }
-
-            var client = new
-               CustomerService.CustomerServiceClient(channel);
-
-            CustomerId idC = new CustomerId
-            {
-                Id = (int)id
-            };
-            Customer customer = client.Get(idC);
-
+            var client = new CustomerService.CustomerServiceClient(channel);
+            Customer customer = client.Get(new CustomerId() { Id = (int)id });
             if (customer == null)
             {
                 return NotFound();
             }
-
-            return View(new Neag_Cristina_Lab2_EB.Models.Customer()
-            {
-                CustomerID = customer.CustomerId,
-                Name = customer.Name,
-                Adress = customer.Adress,
-                BirthDate = DateTime.Parse(customer.Birthdate)
-            });
+            return View(customer);
         }
-
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int? id, Customer customer)
+        public IActionResult Edit(int id, Customer customer)
         {
-            if (id == null)
+            if (id != customer.CustomerId)
             {
                 return NotFound();
             }
-
-            var client = new
-               CustomerService.CustomerServiceClient(channel);
-
-            CustomerId idC = new CustomerId
+            if (ModelState.IsValid)
             {
-                Id = (int)id
-            };
-            Customer customer1 = client.Get(idC);
-
-            if (customer1 == null)
-            {
-                return NotFound();
+                var client = new CustomerService.CustomerServiceClient(channel);
+                Customer response = client.Update(customer);
+                return RedirectToAction(nameof(Index));
             }
-
-            client.Update(customer);
-
-            return RedirectToAction(nameof(Index));
+            return View(customer);
         }
 
-        public  IActionResult Delete(int? id, bool? saveChangesError = false)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var client = new
-               CustomerService.CustomerServiceClient(channel);
-
-            CustomerId idC = new CustomerId
-            {
-                Id = (int)id
-            };
-            Customer customer = client.Get(idC);
-
+            var client = new CustomerService.CustomerServiceClient(channel);
+            Customer customer = client.Get(new CustomerId() { Id = (int)id });
             if (customer == null)
             {
                 return NotFound();
             }
-
-            return View(new Neag_Cristina_Lab2_EB.Models.Customer()
-            {
-                CustomerID = customer.CustomerId,
-                Name = customer.Name,
-                Adress = customer.Adress,
-                BirthDate = DateTime.Parse(customer.Birthdate)
-            });
+            return View(customer);
         }
 
-        // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            if (id == null)
+            var client = new CustomerService.CustomerServiceClient(channel);
+            Empty response = client.Delete(new CustomerId()
             {
-                return NotFound();
-            }
-
-            var client = new
-               CustomerService.CustomerServiceClient(channel);
-
-            CustomerId idC = new CustomerId
-            {
-                Id = (int)id
-            };
-            Customer customer1 = client.Get(idC);
-
-            if (customer1 == null)
-            {
-                return NotFound();
-            }
-
-            client.Delete(idC);
-
+                Id = id
+            });
             return RedirectToAction(nameof(Index));
         }
     }
